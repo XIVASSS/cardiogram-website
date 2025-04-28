@@ -1,42 +1,214 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Set dark background */
+body {
+  background-color: #111827;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Outer white card */
+.container {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background: #ffffff;
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header section */
+.header {
   text-align: center;
+  margin-top: 2rem; /* Headspace from top */
+  margin-bottom: 2rem;
+  flex-shrink: 0; /* Prevents header from shrinking */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.header-title {
+  font-size: 0.75rem;
+  color: #9CA3AF;
+  letter-spacing: 0.2em;
+  margin-bottom: 0.5rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.header-name {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #111827;
+}
+
+.header-time {
+  font-size: 0.875rem;
+  color: #9CA3AF;
+  margin-top: 0.5rem;
+}
+
+.header-buttons {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.header-button-primary {
+  background: #000000;
+  color: #ffffff;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+.header-button-secondary {
+  background: #E5E7EB;
+  color: #111827;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+/* Main Grid */
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 350px;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1; /* Takes remaining space */
+  min-height: 0; /* Prevents overflow issues */
+}
+
+/* Boxes */
+.grid-item-heart {
+  grid-column: span 3;
+  background: #ffffff;
+  padding: 1.5rem;
+  border: 1px solid #D1D5DB;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.grid-item-qrs {
+  background: #1F2937;
+  color: #ffffff;
+  padding: 1.5rem;
+  border: 1px solid #D1D5DB;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.grid-item {
+  background: #ffffff;
+  padding: 1.5rem;
+  border: 1px solid #D1D5DB;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.grid-item-red {
+  background: linear-gradient(to top left, #f87171, #ef4444);
+  color: #ffffff;
+  padding: 1.5rem;
+  border: 1px solid #D1D5DB;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Typography inside boxes */
+.box-title {
+  font-size: 0.75rem;
+  color: #9CA3AF;
+  margin-bottom: 0.5rem;
+}
+
+.box-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color:#6B7280
+}
+
+.box-unit {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6B7280;
+}
+
+/* Progress Bar */
+.progress-bar-background {
+  width: 100%;
+  height: 11px;
+  background: #E5E7EB;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.progress-bar-fill {
+  background: linear-gradient(to left ,#8ECFD8 , #309CAA);
+  height: 10px;
+  width: 70%;
+  border-radius: 9999px;
+}
+
+.progress-percentage {
+  position: absolute;
+  top: -1.5rem; /* Position above the bar */
+  left: 50%; /* Center the text */
+  transform: translateX(-50%); /* Adjust for centering */
+  font-size: 0.875rem;
+  color: #111827;
+  font-weight: 500;
+}
+
+/* Description */
+.box-description {
+  font-size: 0.75rem;
+  color: #9CA3AF;
+  margin-top: 1rem;
+  line-height: 1.2;
+}
+
+/* Responsive Grid Layout */
+
+/* For medium screens (tablets) */
+@media (max-width: 1200px) {
+  .grid-layout {
+    grid-template-columns: repeat(3, 1fr);
   }
-  to {
-    transform: rotate(360deg);
+
+  .grid-item-heart {
+    grid-column: span 2;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* For small screens (large phones) */
+@media (max-width: 900px) {
+  .grid-layout {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-item-heart {
+    grid-column: span 1;
   }
 }
 
-.card {
-  padding: 2em;
-}
+/* For very small screens (phones) */
+@media (max-width: 600px) {
+  .grid-layout {
+    grid-template-columns: 1fr;
+  }
 
-.read-the-docs {
-  color: #888;
+  .grid-item-heart {
+    grid-column: span 1;
+  }
 }
