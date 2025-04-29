@@ -10,7 +10,7 @@ function HeartRate() {
     -0.6,
   ];
 
-  // Shift yData to positive range by adding 0.7
+  // --->  + 0.7
   const shiftedYData = yData.map((y) => y + 0.7);
 
   return (
@@ -29,7 +29,7 @@ function HeartRate() {
             yAxis={[{ disableLine: true, disableTicks: true }]}
             series={[
               {
-                data: shiftedYData, // Use shifted data
+                data: shiftedYData,
                 showMark: ({ index }) => index % 2 === 0,
                 color: "url(#heartRateGradient)",
                 curveStyle: { strokeWidth: 5 },
@@ -43,7 +43,6 @@ function HeartRate() {
             margin={{ left: 0, right: 0, top: 0, bottom: 0 }}
             disableAxisListener={true}
           >
-            {/* Define SVG gradient */}
             <defs>
               <linearGradient
                 id="heartRateGradient"

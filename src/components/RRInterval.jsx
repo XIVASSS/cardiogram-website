@@ -3,7 +3,6 @@ import React from "react";
 function RRInterval() {
   const styles = {
     container: {
-      // backgroundColor: "#f0f0f0",
       padding: "20px",
       borderRadius: "8px",
       textAlign: "left",

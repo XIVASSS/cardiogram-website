@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
 
 function TWave() {
-  // First gauge values (Systole)
   const systoleValue = 140;
   const systoleMinValue = 90;
   const systoleMaxValue = 180;
 
-  // Second gauge values (Diastole)
   const diastoleValue = 85;
   const diastoleMinValue = 60;
   const diastoleMaxValue = 120;
 
-  // SVG dimensions and positioning
   const width = 300;
   const height = 220;
   const centerX = width / 2;
@@ -19,25 +16,21 @@ function TWave() {
   const radius = 140;
   const arcWidth = 25;
 
-  // Angles for our gauge (in radians)
-  const startAngle = Math.PI; // 180 degrees (left side)
-  const endAngle = 0; // 0 degrees (right side)
+  const startAngle = Math.PI;
+  const endAngle = 0;
   const totalAngleRad = Math.PI;
 
-  // Generate the arc path for the colored portion
   const generateArc = (start, end, rad) => {
     const startX = centerX + Math.cos(start) * rad;
     const startY = centerY - Math.sin(start) * rad;
     const endX = centerX + Math.cos(end) * rad;
     const endY = centerY - Math.sin(end) * rad;
 
-    // Arc flag is 0 for minor arc (less than 180 degrees)
     const largeArcFlag = Math.abs(end - start) > Math.PI ? 1 : 0;
 
     return `M ${startX} ${startY} A ${rad} ${rad} 0 ${largeArcFlag} 1 ${endX} ${endY}`;
   };
 
-  // Calculate the systole blue arc path (from 90 to value)
   const systoleStartValue = systoleMinValue;
   const systoleEndValue = systoleValue;
   const systoleStartRatio =
@@ -52,7 +45,6 @@ function TWave() {
     radius
   );
 
-  // Calculate the diastole green arc path (from 60 to value)
   const diastoleStartValue = diastoleMinValue;
   const diastoleEndValue = diastoleValue;
   const diastoleStartRatio =
@@ -69,7 +61,6 @@ function TWave() {
     radius
   );
 
-  // CSS styles for the components
   const styles = {
     wrapper: {
       display: "flex",
@@ -124,14 +115,11 @@ function TWave() {
 
   return (
     <div style={styles.wrapper}>
-      {/* First Gauge - Systole */}
       <div style={styles.container}>
         <div style={styles.gaugeContainer}>
           <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
-            {/* Blue arc from 90 to 140 */}
             <path d={systoleArcPath} style={styles.arcBlue} />
 
-            {/* Value display in center */}
             <text
               x={centerX}
               y={centerY - 20}
@@ -154,14 +142,11 @@ function TWave() {
         </div>
       </div>
 
-      {/* Second Gauge - Diastole */}
       <div style={{ ...styles.container, ...styles.diastoleContainer }}>
         <div style={styles.gaugeContainer}>
           <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
-            {/* Green arc from 60 to 85 */}
             <path d={diastoleArcPath} style={styles.arcGreen} />
 
-            {/* Value display in center */}
             <text
               x={centerX}
               y={centerY - 20}
@@ -174,7 +159,6 @@ function TWave() {
           </svg>
         </div>
 
-        {/* Label text */}
         <div style={styles.textContainer}>
           <div style={styles.title}>Avg Diastole</div>
           <p style={styles.description}>

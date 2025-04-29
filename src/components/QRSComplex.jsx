@@ -2,7 +2,6 @@ function QRSComplex() {
   return (
     <div
       style={{
-        //backgroundColor: "#333",
         borderRadius: "5px",
         width: "100%",
         boxSizing: "border-box",
