@@ -1,15 +1,19 @@
 function Header() {
-    return (
-      <div className="header">
-        <div className="header-title">CARDIOGRAM REPORT</div>
-        <div className="header-name">Jaagrav Seal</div>
-        <div className="header-time">April 28, 2025 - 3:50 PM</div>
-        <div className="header-buttons">
-          <button className="header-button-primary">Download Report</button>
-          <button className="header-button-secondary">Share</button>
+  return (
+    <div className="header">
+      <div className="header-title">CARDIOGRAM</div>
+      <div className="header-buttons">
+        <div className="header-button-primary">
+          <div>Jaagrav Seal</div>
+          <div>UID</div>
+        </div>
+        <div className="header-button-secondary">
+          <div>Session ID</div>
+          <div>22nd Jan, 2025 | 20:46</div>
         </div>
       </div>
-    );
-  }
-  
-  export default Header;
+    </div>
+  );
+}
+
+export default Header;

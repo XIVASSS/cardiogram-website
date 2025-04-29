@@ -6,6 +6,9 @@ import RRInterval from "./components/RRInterval";
 import PRInterval from "./components/PRInterval";
 import STSegment from "./components/STSegment";
 import TWave from "./components/TWave";
+// import * as React from "react";
+// import Stack from "@mui/material/Stack";
+// import { Gauge } from "@mui/x-charts/Gauge";
 
 function App() {
   return (
