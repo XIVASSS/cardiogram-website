@@ -5,12 +5,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-top: 1rem; /* Add padding from top */
 }
 
 .twave-gauge-container {
   flex-shrink: 0;
   display: flex;
   justify-content: center;
+  margin: 0; /* Ensure no margin */
+  padding: 0; /* Ensure no padding */
 }
 
 .twave-text-container {
@@ -35,6 +38,13 @@
   fill: none;
   stroke: #a5c6ff;
   stroke-width: 25;
+  stroke-linecap: round;
+}
+
+.twave-arc-green {
+  fill: none;
+  stroke: #4caf50; /* Green for diastolic */
+  stroke-width: 12;
   stroke-linecap: round;
 }
 

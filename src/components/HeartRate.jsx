@@ -37,7 +37,7 @@ function HeartRate() {
               },
             ]}
             height={310}
-            width={1200}
+            width={1150}
             slotProps={{ legend: { hidden: true } }}
             tooltip={{ trigger: "none" }}
             margin={{ left: 0, right: 0, top: 0, bottom: 0 }}
@@ -53,11 +53,11 @@ function HeartRate() {
               >
                 <stop
                   offset="0%"
-                  style={{ stopColor: "#0000FF", stopOpacity: 0.5 }}
+                  style={{ stopColor: "#4E4E4E", stopOpacity: 0.5 }}
                 />
                 <stop
                   offset="100%"
-                  style={{ stopColor: "#f87171", stopOpacity: 0.1 }}
+                  style={{ stopColor: "#FE2549", stopOpacity: 0.1 }}
                 />
               </linearGradient>
             </defs>
