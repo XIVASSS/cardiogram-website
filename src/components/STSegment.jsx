@@ -1,4 +1,32 @@
+import { useEffect, useState } from "react";
+
 function STSegment() {
+  const [avgBPM, setAvgBPM] = useState(null);
+
+  useEffect(() => {
+    fetch(
+      "https://rmdhlpqhfejbnmqiiakr.supabase.co/rest/v1/session_reports?select=*",
+      {
+        method: "GET",
+        headers: {
+          apikey:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtZGhscHFoZmVqYm5tcWlpYWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NTA2MDUsImV4cCI6MjA2MTMyNjYwNX0.1SeozpqrB_gfPogq7vIGfTkSVat0LUXIpUERYtoTGPM",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtZGhscHFoZmVqYm5tcWlpYWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NTA2MDUsImV4cCI6MjA2MTMyNjYwNX0.1SeozpqrB_gfPogq7vIGfTkSVat0LUXIpUERYtoTGPM",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.length > 0) {
+          setAvgBPM(data[0].avg_bpm);
+        }
+      })
+      .catch((err) => {
+        console.error("API error:", err);
+      });
+  }, []);
+
   return (
     <div
       style={{
@@ -10,15 +38,10 @@ function STSegment() {
         padding: "20px",
       }}
     >
-      <div
-        style={{
-          fontSize: "18px",
-          color: "white",
-          marginTop: "10px",
-        }}
-      >
-        ST Segment
+      <div style={{ fontSize: "18px", color: "white", marginTop: "10px" }}>
+        avg_bpm
       </div>
+
       <div
         style={{
           fontSize: "48px",
@@ -27,16 +50,12 @@ function STSegment() {
           marginBottom: "10px",
         }}
       >
-        118 <span style={{ fontSize: "24px" }}>avg BPM</span>
+        {avgBPM !== null ? avgBPM : "Loading..."}{" "}
+        <span style={{ fontSize: "24px" }}>avg BPM</span>
       </div>
-      <div
-        style={{
-          fontSize: "14px",
-          color: "white",
-          marginTop: "100px",
-        }}
-      >
-        this is the description placeholder for this tab about theis specific
+
+      <div style={{ fontSize: "14px", color: "white", marginTop: "100px" }}>
+        this is the description placeholder for this tab about this specific
         tab.
       </div>
     </div>

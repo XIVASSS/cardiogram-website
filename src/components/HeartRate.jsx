@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
+import "./HeartRate.css";
 
 function HeartRate() {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const xData = Array.from({ length: 30 }, (_, i) => i + 1);
 
   const yData = [
@@ -10,12 +13,22 @@ function HeartRate() {
     -0.6,
   ];
 
-  // --->  + 0.7
   const shiftedYData = yData.map((y) => y + 0.7);
 
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
-    <div>
-      <div className="heart-rate-graph">
+    <div className={`heart-rate-container ${isExpanded ? "expanded" : ""}`}>
+      {isExpanded && (
+        <div className="background-overlay" onClick={toggleExpand}></div>
+      )}
+      <div
+        className="heart-rate-graph"
+        onClick={toggleExpand}
+        style={{ zIndex: isExpanded ? 1000 : 1 }}
+      >
         <div className="heart-rate-scrollable">
           <LineChart
             xAxis={[
@@ -24,9 +37,21 @@ function HeartRate() {
                 disableLine: true,
                 disableTicks: true,
                 disableAxisListener: true,
+                label: "",
+                tickLabelStyle: { display: "none" },
+                scaleType: "linear",
               },
             ]}
-            yAxis={[{ disableLine: true, disableTicks: true }]}
+            yAxis={[
+              {
+                disableLine: true,
+                disableTicks: true,
+                label: "",
+                tickLabelStyle: { display: "none" },
+                min: Math.min(...shiftedYData) - 0.5,
+                max: Math.max(...shiftedYData) + 0.5,
+              },
+            ]}
             series={[
               {
                 data: shiftedYData,
@@ -36,8 +61,8 @@ function HeartRate() {
                 valueFormatter: () => "",
               },
             ]}
-            height={310}
-            width={1150}
+            height={isExpanded ? 500 : 310}
+            width={isExpanded ? 1400 : 1150}
             slotProps={{ legend: { hidden: true } }}
             tooltip={{ trigger: "none" }}
             margin={{ left: 0, right: 0, top: 0, bottom: 0 }}

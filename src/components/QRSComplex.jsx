@@ -1,4 +1,28 @@
+import React, { useState, useEffect } from "react";
+
 function QRSComplex() {
+  const [rrInterval, setRrInterval] = useState(null);
+
+  useEffect(() => {
+    fetch(
+      "https://rmdhlpqhfejbnmqiiakr.supabase.co/rest/v1/session_reports?select=*",
+      {
+        method: "GET",
+        headers: {
+          apikey: "your-api-key-here",
+          Authorization: "Bearer your-api-key-here",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.length > 0) {
+          setRrInterval(data[0].avg_rr_interval);
+        }
+      })
+      .catch((err) => console.error("Fetch error:", err));
+  }, []);
+
   return (
     <div
       style={{
@@ -16,8 +40,9 @@ function QRSComplex() {
           marginTop: "10px",
         }}
       >
-        QRS Complex
+        avg_rr_interval
       </div>
+
       <div
         style={{
           fontSize: "48px",
@@ -27,9 +52,18 @@ function QRSComplex() {
           marginTop: "120px",
         }}
       >
-        90{" "}
-        <span style={{ fontSize: "12px", fontWeight: "lighter" }}>avg BPM</span>
+        {rrInterval !== null ? (
+          <>
+            {rrInterval}{" "}
+            <span style={{ fontSize: "12px", fontWeight: "lighter" }}>
+              avg RR Interval
+            </span>
+          </>
+        ) : (
+          "Loading..."
+        )}
       </div>
+
       <div
         style={{
           fontSize: "14px",
@@ -37,7 +71,7 @@ function QRSComplex() {
           marginTop: "20px",
         }}
       >
-        this is the description placeholder for this tab about theis specific
+        This is the description placeholder for this tab about this specific
         tab.
       </div>
     </div>

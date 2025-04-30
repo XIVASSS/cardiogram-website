@@ -13,7 +13,7 @@ body {
   margin: 0;
   background: #ffffff;
   border-radius: 0;
-  /* overflow: hidden; */
+
   box-shadow: none;
   padding: 0;
   display: flex;
@@ -23,9 +23,9 @@ body {
 /* Header section */
 .header {
   text-align: center;
-  margin-top: 12rem; /* Headspace from top */
-  margin-bottom: 6rem;
-  flex-shrink: 0; /* Prevents header from shrinking */
+  margin-top: 10rem;
+  margin-bottom: 4rem;
+  flex-shrink: 0;
   margin-left: 0;
   padding-left: 0;
   text-align: left;
@@ -40,20 +40,6 @@ body {
   text-align: left;
   margin-left: 3rem;
 }
-
-/* .header-name {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #111827;
-  text-align: left;
-  /* margin-left: 1rem; 
-} */
-
-/* .header-time {
-  font-size: 0.875rem;
-  color: #9ca3af;
-  margin-top: 0.5rem;
-} */
 
 .header-buttons {
   margin-top: 1.5rem;
@@ -92,8 +78,8 @@ body {
   gap: 0;
   margin: 0;
   padding: 0;
-  flex-grow: 1; /* Takes remaining space */
-  min-height: 0; /* Prevents overflow issues */
+  flex-grow: 1;
+  min-height: 0;
 }
 
 /* Boxes */
@@ -108,7 +94,7 @@ body {
 }
 
 .grid-item-qrs {
-  background: #1f2937;
+  background: #282828;
   color: #ffffff;
   padding: 1.5rem;
   border: 1px solid #d1d5db;
