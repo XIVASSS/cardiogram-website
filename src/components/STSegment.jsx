@@ -1,31 +1,37 @@
 import { useEffect, useState } from "react";
 
-function STSegment() {
+function STSegment({ sessionData }) {
   const [avgBPM, setAvgBPM] = useState(null);
 
   useEffect(() => {
-    fetch(
-      "https://rmdhlpqhfejbnmqiiakr.supabase.co/rest/v1/session_reports?select=*",
-      {
-        method: "GET",
-        headers: {
-          apikey:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtZGhscHFoZmVqYm5tcWlpYWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NTA2MDUsImV4cCI6MjA2MTMyNjYwNX0.1SeozpqrB_gfPogq7vIGfTkSVat0LUXIpUERYtoTGPM",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtZGhscHFoZmVqYm5tcWlpYWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NTA2MDUsImV4cCI6MjA2MTMyNjYwNX0.1SeozpqrB_gfPogq7vIGfTkSVat0LUXIpUERYtoTGPM",
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.length > 0) {
-          setAvgBPM(data[0].avg_bpm);
+    // If sessionData is passed as a prop, use it directly
+    if (sessionData && sessionData.avg_bpm !== undefined) {
+      setAvgBPM(sessionData.avg_bpm);
+    } else {
+      // Otherwise fetch data (fallback for direct component usage)
+      fetch(
+        "https://rmdhlpqhfejbnmqiiakr.supabase.co/rest/v1/session_reports?select=*",
+        {
+          method: "GET",
+          headers: {
+            apikey:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtZGhscHFoZmVqYm5tcWlpYWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NTA2MDUsImV4cCI6MjA2MTMyNjYwNX0.1SeozpqrB_gfPogq7vIGfTkSVat0LUXIpUERYtoTGPM",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtZGhscHFoZmVqYm5tcWlpYWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NTA2MDUsImV4cCI6MjA2MTMyNjYwNX0.1SeozpqrB_gfPogq7vIGfTkSVat0LUXIpUERYtoTGPM",
+          },
         }
-      })
-      .catch((err) => {
-        console.error("API error:", err);
-      });
-  }, []);
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.length > 0) {
+            setAvgBPM(data[0].avg_bpm);
+          }
+        })
+        .catch((err) => {
+          console.error("API error:", err);
+        });
+    }
+  }, [sessionData]);
 
   return (
     <div

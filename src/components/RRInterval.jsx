@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-function RRInterval() {
+function RRInterval({ sessionData }) {
+  const [rrIntervalData, setRrIntervalData] = useState(null);
+
+  useEffect(() => {
+    // If session data is provided, update the RR interval data
+    if (sessionData && sessionData.avg_rr_interval) {
+      setRrIntervalData(sessionData.avg_rr_interval);
+    }
+  }, [sessionData]);
+
   const styles = {
     container: {
       padding: "20px",
@@ -34,13 +43,13 @@ function RRInterval() {
 
   return (
     <div style={styles.container}>
-      <div style={styles.title}>Heart Rate</div>
+      <div style={styles.title}>RR Interval</div>
       <div style={styles.value}>
-        118 <span style={styles.unit}>avg BPM</span>
+        {rrIntervalData !== null ? rrIntervalData : "Loading..."}{" "}
+        <span style={styles.unit}>ms</span>
       </div>
       <div style={styles.description}>
-        this is the description placeholder for this tab about this specific
-        tab.
+        Time between consecutive heartbeats. Normal range: 750-900ms.
       </div>
     </div>
   );

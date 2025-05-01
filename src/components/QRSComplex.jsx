@@ -1,27 +1,52 @@
 import React, { useState, useEffect } from "react";
 
-function QRSComplex() {
-  const [rrInterval, setRrInterval] = useState(null);
+function QRSComplex({ sessionData }) {
+  const [bloodPressureData, setBloodPressureData] = useState({
+    systole: null,
+    diastole: null,
+  });
 
   useEffect(() => {
-    fetch(
-      "https://rmdhlpqhfejbnmqiiakr.supabase.co/rest/v1/session_reports?select=*",
-      {
-        method: "GET",
-        headers: {
-          apikey: "your-api-key-here",
-          Authorization: "Bearer your-api-key-here",
-        },
+    // If session data is provided, use it directly
+    if (sessionData) {
+      const systole = sessionData.avg_systole;
+      const diastole = sessionData.avg_diastole;
+
+      if (systole !== undefined && diastole !== undefined) {
+        setBloodPressureData({ systole, diastole });
       }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.length > 0) {
-          setRrInterval(data[0].avg_rr_interval);
+    } else {
+      // Fallback to fetching data if session data isn't provided
+      fetch(
+        "https://rmdhlpqhfejbnmqiiakr.supabase.co/rest/v1/session_reports?select=*",
+        {
+          method: "GET",
+          headers: {
+            apikey:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtZGhscHFoZmVqYm5tcWlpYWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NTA2MDUsImV4cCI6MjA2MTMyNjYwNX0.1SeozpqrB_gfPogq7vIGfTkSVat0LUXIpUERYtoTGPM",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtZGhscHFoZmVqYm5tcWlpYWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NTA2MDUsImV4cCI6MjA2MTMyNjYwNX0.1SeozpqrB_gfPogq7vIGfTkSVat0LUXIpUERYtoTGPM",
+          },
         }
-      })
-      .catch((err) => console.error("Fetch error:", err));
-  }, []);
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.length > 0) {
+            setBloodPressureData({
+              systole: data[0].avg_systole,
+              diastole: data[0].avg_diastole,
+            });
+          }
+        })
+        .catch((err) => console.error("Fetch error:", err));
+    }
+  }, [sessionData]);
+
+  const { systole, diastole } = bloodPressureData;
+  const isLoading = systole === null || diastole === null;
+  const bloodPressureText = isLoading
+    ? "Loading..."
+    : `${systole}/${diastole} mmHg`;
 
   return (
     <div
@@ -40,7 +65,7 @@ function QRSComplex() {
           marginTop: "10px",
         }}
       >
-        avg_rr_interval
+        Blood Pressure
       </div>
 
       <div
@@ -52,15 +77,11 @@ function QRSComplex() {
           marginTop: "120px",
         }}
       >
-        {rrInterval !== null ? (
-          <>
-            {rrInterval}{" "}
-            <span style={{ fontSize: "12px", fontWeight: "lighter" }}>
-              avg RR Interval
-            </span>
-          </>
-        ) : (
-          "Loading..."
+        {bloodPressureText}{" "}
+        {!isLoading && (
+          <span style={{ fontSize: "12px", fontWeight: "lighter" }}>
+            Systole/Diastole
+          </span>
         )}
       </div>
 
@@ -71,8 +92,7 @@ function QRSComplex() {
           marginTop: "20px",
         }}
       >
-        This is the description placeholder for this tab about this specific
-        tab.
+        Systolic (top) and diastolic (bottom) blood pressure values.
       </div>
     </div>
   );

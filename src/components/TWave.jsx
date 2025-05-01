@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
-function TWave() {
+function TWave({ sessionData }) {
   const [systoleValue, setSystoleValue] = useState(null);
   const [diastoleValue, setDiastoleValue] = useState(null);
 
-  const systoleMinValue = 90;
+  const systoleMinValue = 70; //90
   const systoleMaxValue = 180;
 
-  const diastoleMinValue = 60;
+  const diastoleMinValue = 50; //60
   const diastoleMaxValue = 120;
 
   const svgWidth = 300;
@@ -15,8 +15,8 @@ function TWave() {
 
   const systoleCenterX = svgWidth / 2;
   const systoleCenterY = svgHeight / 2;
-  const systoleRadius = 100;
-  const systoleArcWidth = 20;
+  const systoleRadius = 90;
+  const systoleArcWidth = 25; //20
 
   const diastoleOffsetX = 0;
   const diastoleOffsetY = 0;
@@ -30,26 +30,37 @@ function TWave() {
   const totalAngleRad = Math.PI;
 
   useEffect(() => {
-    fetch(
-      "https://rmdhlpqhfejbnmqiiakr.supabase.co/rest/v1/session_reports?select=*",
-      {
-        headers: {
-          apikey:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtZGhscHFoZmVqYm5tcWlpYWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NTA2MDUsImV4cCI6MjA2MTMyNjYwNX0.1SeozpqrB_gfPogq7vIGfTkSVat0LUXIpUERYtoTGPM",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtZGhscHFoZmVqYm5tcWlpYWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NTA2MDUsImV4cCI6MjA2MTMyNjYwNX0.1SeozpqrB_gfPogq7vIGfTkSVat0LUXIpUERYtoTGPM",
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.length > 0) {
-          setSystoleValue(data[0].avg_systole);
-          setDiastoleValue(data[0].avg_diastole);
+    // If session data is provided, use it directly
+    if (
+      sessionData &&
+      sessionData.avg_systole !== undefined &&
+      sessionData.avg_diastole !== undefined
+    ) {
+      setSystoleValue(sessionData.avg_systole);
+      setDiastoleValue(sessionData.avg_diastole);
+    } else {
+      // Fallback to fetching if session data is not available
+      fetch(
+        "https://rmdhlpqhfejbnmqiiakr.supabase.co/rest/v1/session_reports?select=*",
+        {
+          headers: {
+            apikey:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtZGhscHFoZmVqYm5tcWlpYWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NTA2MDUsImV4cCI6MjA2MTMyNjYwNX0.1SeozpqrB_gfPogq7vIGfTkSVat0LUXIpUERYtoTGPM",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtZGhscHFoZmVqYm5tcWlpYWtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NTA2MDUsImV4cCI6MjA2MTMyNjYwNX0.1SeozpqrB_gfPogq7vIGfTkSVat0LUXIpUERYtoTGPM",
+          },
         }
-      })
-      .catch((error) => console.error("Fetch error:", error));
-  }, []);
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.length > 0) {
+            setSystoleValue(data[0].avg_systole);
+            setDiastoleValue(data[0].avg_diastole);
+          }
+        })
+        .catch((error) => console.error("Fetch error:", error));
+    }
+  }, [sessionData]);
 
   const generateArc = (start, end, rad, centerX, centerY) => {
     const startX = centerX + Math.cos(start) * rad;
