@@ -180,9 +180,7 @@ const LoginPage = () => {
                 onChange={handleSessionIdChange}
                 placeholder="Session ID (e.g. 1, 2, 3)"
               />
-              <div className="input-hint">
-                Enter the numeric session ID, not the user ID
-              </div>
+              <div className="input-hint">Enter the numeric session ID</div>
             </div>
 
             {error && <div className="error">{error}</div>}
@@ -207,7 +205,7 @@ const LoginPage = () => {
             <div className="debug-info">
               <details>
                 <summary>Available Session IDs (Debug)</summary>
-                <div className="session-id-example">
+                {/* <div className="session-id-example">
                   <p>Example session structure:</p>
                   <pre>
                     {`{
@@ -217,7 +215,7 @@ const LoginPage = () => {
   ...
 }`}
                   </pre>
-                </div>
+                </div> */}
                 <ul>
                   {allSessions.map((session) => (
                     <li
